@@ -10,7 +10,7 @@ go get github.com/dmzlingyin/aitubo-sdk-go
 
 ## Usage
 
-### Getting an OpenAI API Key:
+### Getting an API Key:
 
 1. Visit the Aitubo website at [https://app.aitubo.ai](https://app.aitubo.ai).
 2. If you don't have an account, click on "Login" to create one.
