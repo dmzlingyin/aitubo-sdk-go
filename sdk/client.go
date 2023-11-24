@@ -14,7 +14,48 @@
 
 package sdk
 
+var BaseURL = "https://creator.aitubo.ai/api"
+
 type Client struct {
 	apiKey  string
 	baseURL string
+	job     Job
+	model   Model
+}
+
+func NewClient(key string) *Client {
+	return &Client{
+		apiKey:  key,
+		baseURL: BaseURL,
+		job:     NewJob(),
+		model:   NewModel(),
+	}
+}
+
+func (c *Client) CreateText2ImageJob(req *CreateText2ImageJobRequest) (*CreateJobResponse, error) {
+	return c.job.CreateText2ImageJob(req)
+}
+
+func (c *Client) CreateImage2ImageJob(req *CreateImage2ImageJobRequest) (*CreateJobResponse, error) {
+	return c.job.CreateImage2ImageJob(req)
+}
+
+func (c *Client) CreateControlNetJob(req *CreateControlNetJobRequest) (*CreateJobResponse, error) {
+	return c.job.CreateControlNetJob(req)
+}
+
+func (c *Client) CreateUpscaleJob(req *CreateUpscaleJobRequest) (*CreateJobResponse, error) {
+	return c.job.CreateUpscaleJob(req)
+}
+
+func (c *Client) QueryJob() {
+	c.job.QueryJob()
+}
+
+func (c *Client) ListModels() {
+	c.model.ListModels()
+}
+
+func (c *Client) QueryModel() {
+	c.model.QueryModel()
 }
