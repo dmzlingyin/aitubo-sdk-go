@@ -14,7 +14,7 @@
 
 package sdk
 
-var BaseURL = "https://creator.aitubo.ai/api"
+var Domain = "https://creator.aitubo.ai"
 
 type Client struct {
 	apiKey  string
@@ -25,37 +25,36 @@ type Client struct {
 
 func NewClient(key string) *Client {
 	return &Client{
-		apiKey:  key,
-		baseURL: BaseURL,
-		job:     NewJob(),
-		model:   NewModel(),
+		apiKey: key,
+		job:    NewJob(key),
+		model:  NewModel(),
 	}
 }
 
 func (c *Client) CreateText2ImageJob(req *CreateText2ImageJobRequest) (*CreateJobResponse, error) {
-	return c.job.CreateText2ImageJob(req)
+	return c.job.Create(req)
 }
 
 func (c *Client) CreateImage2ImageJob(req *CreateImage2ImageJobRequest) (*CreateJobResponse, error) {
-	return c.job.CreateImage2ImageJob(req)
+	return c.job.Create(req)
 }
 
 func (c *Client) CreateControlNetJob(req *CreateControlNetJobRequest) (*CreateJobResponse, error) {
-	return c.job.CreateControlNetJob(req)
+	return c.job.Create(req)
 }
 
 func (c *Client) CreateUpscaleJob(req *CreateUpscaleJobRequest) (*CreateJobResponse, error) {
-	return c.job.CreateUpscaleJob(req)
+	return c.job.Upscale(req)
 }
 
 func (c *Client) QueryJob() {
-	c.job.QueryJob()
+	c.job.Query()
 }
 
 func (c *Client) ListModels() {
-	c.model.ListModels()
+	c.model.List()
 }
 
 func (c *Client) QueryModel() {
-	c.model.QueryModel()
+	c.model.Query()
 }

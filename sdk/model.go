@@ -1,8 +1,8 @@
 package sdk
 
 type Model interface {
-	ListModels()
-	QueryModel()
+	List()
+	Query()
 }
 
 type model struct {
@@ -12,8 +12,8 @@ func NewModel() Model {
 	return &model{}
 }
 
-func (m *model) ListModels() {
+func (m *model) List() {
 }
 
-func (m *model) QueryModel() {
+func (m *model) Query() {
 }
