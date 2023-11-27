@@ -55,8 +55,12 @@ type CreateUpscaleJobRequest struct {
 }
 
 type CreateJobResponse struct {
-	ID             string `json:"id"`
-	Credit         int32  `json:"credit"`
-	SubCredit      int32  `json:"subCredit"`
-	ConsumedCredit int32  `json:"consumedCredit"`
+	Code int32  `json:"code"`
+	Info string `json:"info"`
+	Data struct {
+		ID             string `json:"id"`
+		Credit         int32  `json:"credit"`
+		SubCredit      int32  `json:"subCredit"`
+		ConsumedCredit int32  `json:"consumedCredit"`
+	} `json:"data"`
 }
