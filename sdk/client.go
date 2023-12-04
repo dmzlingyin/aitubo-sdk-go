@@ -46,8 +46,8 @@ func (c *Client) CreateUpscaleJob(req *CreateUpscaleJobRequest) (*CreateJobRespo
 	return c.job.Create(req, true)
 }
 
-func (c *Client) QueryJob(id string) {
-	c.job.Query(id)
+func (c *Client) QueryJob(id string) (*QueryJobResponse, error) {
+	return c.job.Query(id)
 }
 
 func (c *Client) ListModels() {

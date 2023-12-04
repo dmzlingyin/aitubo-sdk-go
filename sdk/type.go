@@ -15,9 +15,9 @@ type BaseRequest struct {
 	SafetyChecker   bool    `json:"safetyChecker,omitempty"`
 	Seed            int64   `json:"seed,omitempty"`
 	Scheduler       string  `json:"scheduler,omitempty"`
-	PromptOptimizer bool    `json:"promptOptimizer"`
-	HDEnhance       bool    `json:"hdEnhance"`
-	ImageFormat     string  `json:"imageFormat,omitempty"`
+	PromptOptimizer bool    `json:"promptOptimizer,omitempty"`
+	HDEnhance       bool    `json:"hdEnhance,omitempty"`
+	ImageFormat     string  `json:"imageFormat,omitempty"` // default: jpg
 }
 
 type Lora struct {
@@ -40,7 +40,7 @@ type CreateImage2ImageJobRequest struct {
 type CreateControlNetJobRequest struct {
 	Image           string  `json:"imagePath"`
 	ControlModel    string  `json:"controlModel,omitempty"`
-	ControlStrength float32 `json:"controlStrength"` // range: (0-2]
+	ControlStrength float32 `json:"controlStrength,omitempty"` // range: (0-2]
 	ControlFilter   string  `json:"controlFilter,omitempty"`
 	BaseRequest
 }
@@ -57,10 +57,28 @@ type CreateUpscaleJobRequest struct {
 type CreateJobResponse struct {
 	Code int32  `json:"code"`
 	Info string `json:"info"`
-	Data struct {
+	Data *struct {
 		ID             string `json:"id"`
 		Credit         int32  `json:"credit"`
 		SubCredit      int32  `json:"subCredit"`
 		ConsumedCredit int32  `json:"consumedCredit"`
+	} `json:"data"`
+}
+
+type QueryJobResponse struct {
+	Code int32  `json:"code"`
+	Info string `json:"info,omitempty"`
+	Data *struct {
+		Status int32 `json:"status"`
+		Result struct {
+			Code int32  `json:"code,omitempty"`
+			Info string `json:"info,omitempty"`
+			Data *struct {
+				Domain string   `json:"domain"`
+				Images []string `json:"images"`
+				Nsfws  []bool   `json:"nsfws"`
+				ArtIDs []string `json:"artIds"`
+			}
+		} `json:"result"`
 	} `json:"data"`
 }
