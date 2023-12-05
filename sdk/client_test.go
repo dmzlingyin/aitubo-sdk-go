@@ -31,3 +31,23 @@ func TestQueryJob(t *testing.T) {
 		t.Log(res.Code)
 	}
 }
+
+func TestListModel(t *testing.T) {
+	client := NewClient("Your API Key")
+	res, err := client.ListModels(&ListModelRequest{
+		PageIndex: 1,
+		PageSize:  20,
+		Type:      "",
+		Kind:      "",
+		Name:      "",
+		BaseModel: BaseModelSDXL10,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if res.Code == 0 {
+		t.Log(res.Data.Models)
+	} else {
+		t.Fatal(res.Info)
+	}
+}

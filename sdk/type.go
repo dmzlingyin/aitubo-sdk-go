@@ -1,5 +1,9 @@
 package sdk
 
+import "time"
+
+/********************************************************* Job ********************************************************/
+
 type BaseRequest struct {
 	Prompt          string  `json:"prompt,omitempty"`
 	NegativePrompt  string  `json:"negativePrompt,omitempty"`
@@ -81,4 +85,69 @@ type QueryJobResponse struct {
 			}
 		} `json:"result"`
 	} `json:"data"`
+}
+
+/********************************************************* Model ******************************************************/
+
+const (
+	ModelTypePlatform  = "platform"
+	ModelTypeCommunity = "community"
+	ModelTypeUsed      = "used"
+
+	ModelKindCheckpoint = "checkpoint"
+	ModelKindLora       = "lora"
+
+	BaseModelSD15   = "sd_1.5"
+	BaseModelSDXL10 = "sdxl_1.0"
+)
+
+type ListModelRequest struct {
+	PageIndex int
+	PageSize  int
+	Type      string
+	Kind      string
+	Name      string
+	BaseModel string
+}
+
+type AituboModel struct {
+	ID            string      `json:"id,omitempty"`
+	Name          string      `json:"name,omitempty"`
+	UserName      string      `json:"username,omitempty"`
+	Desc          string      `json:"desc,omitempty"`
+	Cover         string      `json:"cover,omitempty"`
+	CategoryNames []string    `json:"categoryNames,omitempty"`
+	StyleNames    []string    `json:"styleNames,omitempty"`
+	Arts          []*modelArt `json:"arts,omitempty"` // template images
+	IsFavourite   bool        `json:"isFavourite,omitempty"`
+	Kind          string      `json:"kind,omitempty"`
+	BaseModel     string      `json:"baseModel,omitempty"`
+	Options       options     `json:"options,omitempty"`
+	Order         int32       `json:"order,omitempty"`
+	Nsfw          bool        `json:"nsfw,omitempty"`
+	Free          bool        `json:"free,omitempty"`
+	CreatedAt     time.Time   `json:"createdAt,omitempty"`
+}
+
+type options struct {
+	Triggers     []string `json:"triggers,omitempty"`
+	DefaultModel string   `json:"defaultModel,omitempty"`
+	Alpha        float32  `json:"alpha,omitempty"`
+	Width        int32    `json:"width,omitempty"`
+	Height       int32    `json:"height,omitempty"`
+}
+
+type modelArt struct {
+	Path  string `json:"path"`
+	ArtID string `json:"artId"`
+}
+
+type ListModelResponse struct {
+	Code int32  `json:"code"`
+	Info string `json:"info,omitempty"`
+	Data *struct {
+		Domain string        `json:"domain"`
+		Total  int32         `json:"total"`
+		Models []AituboModel `json:"models"`
+	} `json:"data,omitempty"`
 }

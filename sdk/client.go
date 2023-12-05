@@ -50,8 +50,8 @@ func (c *Client) QueryJob(id string) (*QueryJobResponse, error) {
 	return c.job.Query(id)
 }
 
-func (c *Client) ListModels() {
-	c.model.List()
+func (c *Client) ListModels(req *ListModelRequest) (*ListModelResponse, error) {
+	return c.model.List(req)
 }
 
 func (c *Client) QueryModel() {
