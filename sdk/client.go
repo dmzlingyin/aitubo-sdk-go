@@ -14,7 +14,7 @@
 
 package sdk
 
-var Domain = "https://creator.aitubo.ai"
+var Domain = "https://app.aitubo.ai"
 
 type Client struct {
 	apiKey string
