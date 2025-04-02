@@ -14,6 +14,8 @@
 
 package sdk
 
+import "context"
+
 var Domain = "https://app.aitubo.ai"
 
 type Client struct {
@@ -30,20 +32,20 @@ func NewClient(key string) *Client {
 	}
 }
 
-func (c *Client) CreateText2ImageJob(req *CreateText2ImageJobRequest) (*CreateJobResponse, error) {
-	return c.job.Create(req, false)
+func (c *Client) CreateText2ImageJob(ctx context.Context, req *CreateText2ImageJobRequest) (*CreateJobResponse, error) {
+	return c.job.Create(ctx, req, false)
 }
 
-func (c *Client) CreateImage2ImageJob(req *CreateImage2ImageJobRequest) (*CreateJobResponse, error) {
-	return c.job.Create(req, false)
+func (c *Client) CreateImage2ImageJob(ctx context.Context, req *CreateImage2ImageJobRequest) (*CreateJobResponse, error) {
+	return c.job.Create(ctx, req, false)
 }
 
-func (c *Client) CreateControlNetJob(req *CreateControlNetJobRequest) (*CreateJobResponse, error) {
-	return c.job.Create(req, false)
+func (c *Client) CreateControlNetJob(ctx context.Context, req *CreateControlNetJobRequest) (*CreateJobResponse, error) {
+	return c.job.Create(ctx, req, false)
 }
 
-func (c *Client) CreateUpscaleJob(req *CreateUpscaleJobRequest) (*CreateJobResponse, error) {
-	return c.job.Create(req, true)
+func (c *Client) CreateUpscaleJob(ctx context.Context, req *CreateUpscaleJobRequest) (*CreateJobResponse, error) {
+	return c.job.Create(ctx, req, true)
 }
 
 func (c *Client) QueryJob(id string) (*QueryJobResponse, error) {

@@ -2,13 +2,14 @@ package sdk
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
 )
 
 type Job interface {
-	Create(req any, upscale bool) (*CreateJobResponse, error)
+	Create(ctx context.Context, req any, upscale bool) (*CreateJobResponse, error)
 	Query(id string) (*QueryJobResponse, error)
 }
 
@@ -22,7 +23,11 @@ type job struct {
 	key string
 }
 
-func (j *job) Create(req any, upscale bool) (*CreateJobResponse, error) {
+func (j *job) Create(ctx context.Context, req any, upscale bool) (*CreateJobResponse, error) {
+	key, err := j.getKey(ctx)
+	if err != nil {
+		return nil, err
+	}
 	data, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
@@ -37,7 +42,7 @@ func (j *job) Create(req any, upscale bool) (*CreateJobResponse, error) {
 		return nil, err
 	}
 	r.Header.Set("Content-Type", "application/json")
-	r.Header.Set("Authorization", "Bearer "+j.key)
+	r.Header.Set("Authorization", "Bearer "+key)
 	r.Header.Set("X-App-Name", "aitubo-api")
 	r.Header.Set("X-App-Version", Version)
 
@@ -71,4 +76,15 @@ func (j *job) Query(id string) (*QueryJobResponse, error) {
 		return nil, err
 	}
 	return &res, nil
+}
+
+func (j *job) getKey(ctx context.Context) (string, error) {
+	key := j.key
+	if v, ok := ctx.Value("key").(string); ok {
+		key = v
+	}
+	if key == "" {
+		return "", errors.New("key is empty")
+	}
+	return key, nil
 }
