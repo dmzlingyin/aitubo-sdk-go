@@ -3,6 +3,12 @@ package sdk
 import "time"
 
 /********************************************************* Job ********************************************************/
+const (
+	JobStatusNotReady   int32 = 0
+	JobStatusProcessing int32 = 1
+	JobStatusOK         int32 = 2
+	JobStatusFailed     int32 = 3
+)
 
 type BaseRequest struct {
 	Prompt          string  `json:"prompt,omitempty"`
